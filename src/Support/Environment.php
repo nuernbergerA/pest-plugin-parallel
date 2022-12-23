@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pest\Parallel\Support;
 
-use Illuminate\Testing\ParallelRunner;
 
 /**
  * @internal
@@ -13,6 +12,8 @@ final class Environment
 {
     public static function isALaravelApplication(): bool
     {
-        return class_exists('\App\Http\Kernel') && class_exists(ParallelRunner::class);
+        return class_exists(\Illuminate\Foundation\Application::class)
+            && class_exists(\Illuminate\Testing\ParallelRunner::class)
+            && !class_exists(\Orchestra\Testbench\TestCase::class);
     }
 }
